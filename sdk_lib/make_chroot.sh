@@ -20,11 +20,11 @@ if [ -n "${USE}" ]; then
 fi
 
 # Check if the host machine architecture is supported.
-ARCHITECTURE="$(uname -m)"
-if [[ "$ARCHITECTURE" != "x86_64" ]]; then
-  echo "$SCRIPT_NAME: $ARCHITECTURE is not supported as a host machine architecture."
-  exit 1
-fi
+#ARCHITECTURE="$(uname -m)"
+#if [[ "$ARCHITECTURE" != "x86_64" ]]; then
+#  echo "$SCRIPT_NAME: $ARCHITECTURE is not supported as a host machine architecture."
+#  exit 1
+#fi
 
 # Script must be run outside the chroot and as root.
 assert_outside_chroot
