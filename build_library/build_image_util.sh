@@ -365,6 +365,9 @@ finish_image() {
     if [[ ${BOARD} == "arm64-usr" ]]; then
       target_list="arm64-efi"
     fi
+    if [[ ${BOARD} == "ppc64le-usr" ]]; then
+      target_list="ppc64le-efi"
+    fi
     for target in ${target_list}; do
       if [[ "${PROD_IMAGE}" -eq 1 && ${FLAGS_enable_verity} -eq ${FLAGS_TRUE} ]]; then
         ${BUILD_LIBRARY_DIR}/grub_install.sh \
