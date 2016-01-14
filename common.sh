@@ -1046,6 +1046,7 @@ setup_qemu_static() {
         die "Missing basic layout in target rootfs"
       fi
     ;;
+    ppc64le-usr) return 0;;
     *) die "Unsupported arch" ;;
   esac
 }
@@ -1061,6 +1062,7 @@ clean_qemu_static() {
         die "File not found"
       fi
     ;;
+    ppc64le-usr) return 0;;
     *) die "Unsupported arch" ;;
   esac
 }
