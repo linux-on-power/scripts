@@ -42,7 +42,7 @@ declare -r \
     BOARD_PROFILES
 
 ### Generic metadata fetching functions ###
-
+echo "-------before get_poortage_arch-------Kevin"
 # map CHOST to portage ARCH, list came from crossdev
 # Usage: get_portage_arch chost
 get_portage_arch() {
