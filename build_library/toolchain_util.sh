@@ -57,6 +57,7 @@ get_portage_arch() {
         mips*)      echo mips;;
         powerpc64*) echo ppc64;;
         powerpc*)   echo ppc;;
+        ppc64le)    echo ppc64le;;
         sparc*)     echo sparc;;
         s390*)      echo s390;;
         sh*)        echo sh;;
