@@ -16,7 +16,7 @@ TOOLCHAIN_PKGS=(
 declare -A CROSS_PROFILES
 CROSS_PROFILES["x86_64-cros-linux-gnu"]="coreos:coreos/amd64/generic"
 CROSS_PROFILES["aarch64-cros-linux-gnu"]="coreos:coreos/arm64/generic"
-CROSS_PROFILES["ppc64le-unknown-linux-gnu"]="coreos:coreos/ppc64le/generic"
+CROSS_PROFILES["powerpc64le-unknown-linux-gnu"]="coreos:coreos/ppc64le/generic"
 
 # Map board names to CHOSTs and portage profiles. This is the
 # definitive list, there is assorted code new and old that either
@@ -28,7 +28,7 @@ BOARD_PROFILES["amd64-usr"]="coreos:coreos/amd64/generic"
 BOARD_CHOSTS["arm64-usr"]="aarch64-cros-linux-gnu"
 BOARD_PROFILES["arm64-usr"]="coreos:coreos/arm64/generic"
 
-BOARD_CHOSTS["ppc64le-usr"]="ppc64le-unknown-linux-gnu"
+BOARD_CHOSTS["ppc64le-usr"]="powerpc64le-unknown-linux-gnu"
 BOARD_PROFILES["ppc64le-usr"]="coreos:coreos/ppc64le/generic"
 
 BOARD_NAMES=( "${!BOARD_CHOSTS[@]}" )
@@ -79,6 +79,7 @@ get_kernel_arch() {
         m68*)       echo m68k;;
         mips*)      echo mips;;
         powerpc*)   echo powerpc;;
+        ppc64le)    echo powerpc64le;;
         sparc64*)   echo sparc64;;
         sparc*)     echo sparc;;
         s390*)      echo s390;;
