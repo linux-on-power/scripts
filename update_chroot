@@ -46,6 +46,7 @@ switch_to_strict_mode
 . "${BUILD_LIBRARY_DIR}/toolchain_util.sh"
 
 PORTAGE_STABLE_OVERLAY="${REPO_ROOT}/src/third_party/portage-stable"
+#PORTAGE_STABLE_OVERLAY="/usr/portage"
 CROSSDEV_OVERLAY="/usr/local/portage/crossdev"
 COREOS_OVERLAY="${REPO_ROOT}/src/third_party/coreos-overlay"
 COREOS_CONFIG="${COREOS_OVERLAY}/coreos/config"
@@ -70,12 +71,12 @@ sudo touch /etc/portage/make.conf.user
 
 sudo_clobber "/etc/portage/make.conf" <<EOF
 # Created by update_chroot
-PORTDIR="${PORTAGE_STABLE_OVERLAY}"
-PORTDIR_OVERLAY="${CROSSDEV_OVERLAY} ${COREOS_OVERLAY}"
+#PORTDIR="${PORTAGE_STABLE_OVERLAY}"
+PORTDIR="/usr/portage"
+#PORTDIR_OVERLAY="${CROSSDEV_OVERLAY} ${COREOS_OVERLAY}"
 DISTDIR="${REPO_CACHE_DIR}/distfiles"
 PKGDIR="/var/lib/portage/pkgs"
 PORT_LOGDIR="/var/log/portage"
-PORTAGE_BINHOST="$(get_sdk_binhost)"
 PORTAGE_USERNAME="${PORTAGE_USERNAME}"
 MAKEOPTS="--jobs=${NUM_JOBS} --load-average=$((NUM_JOBS * 2))"
 
@@ -87,9 +88,14 @@ EMERGE_DEFAULT_OPTS="--oneshot"
 source "/etc/portage/make.conf.user"
 EOF
 
+#sudo_clobber "/etc/portage/repos.conf/coreos.conf" <<EOF
+#
+#[DEFAULT]
+#main-repo = portage-stable
 sudo_clobber "/etc/portage/repos.conf/coreos.conf" <<EOF
+
 [DEFAULT]
-main-repo = portage-stable
+main-repo = gentoo
 
 [gentoo]
 disabled = true
@@ -195,10 +201,10 @@ info "Updating basic system packages"
 sudo -E ${EMERGE_CMD} --quiet ${EMERGE_FLAGS} \
     dev-util/ccache \
     sys-apps/portage \
-    sys-devel/crossdev \
-    sys-devel/sysroot-wrappers \
-    sys-libs/nss-usrfiles \
-    "${TOOLCHAIN_PKGS[@]}"
+#    sys-devel/crossdev \
+#    sys-devel/sysroot-wrappers \
+#    sys-libs/nss-usrfiles \
+#    "${TOOLCHAIN_PKGS[@]}"
 
 gcc_set_latest_profile "$(portageq envvar CHOST)"
 
@@ -210,7 +216,7 @@ if [[ "${FLAGS_skip_toolchain_update}" -eq "${FLAGS_FALSE}" && \
 
   for cross_chost in "${CROSS_CHOSTS[@]}"; do
     info "Updating cross ${cross_chost} toolchain"
-    install_cross_toolchain "${cross_chost}" --quiet ${EMERGE_FLAGS}
+    #install_cross_toolchain "${cross_chost}" --quiet ${EMERGE_FLAGS}
   done
 fi
 
@@ -223,8 +229,8 @@ done
 # Second pass, update everything else.
 EMERGE_FLAGS+=" --deep"
 info "Updating all SDK packages"
-sudo -E ${EMERGE_CMD} ${EMERGE_FLAGS} \
-    coreos-devel/sdk-depends world
+#sudo -E ${EMERGE_CMD} ${EMERGE_FLAGS} \
+    #coreos-devel/sdk-depends world
 
 info "Removing obsolete packages"
 sudo -E ${EMERGE_CMD} --quiet --depclean @unavailable
