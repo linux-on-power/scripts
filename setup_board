@@ -169,7 +169,8 @@ COREOS_OVERLAY="${REPO_ROOT}/src/third_party/coreos-overlay"
 COREOS_CONFIG="${COREOS_OVERLAY}/coreos/config"
 BOARD_ROOT="/build/${BOARD_VARIANT}"
 BOARD_ETC="${BOARD_ROOT}/etc"
-BOARD_ARCH=$(get_board_arch "$BOARD")
+#BOARD_ARCH=$(get_board_arch "$BOARD")
+BOARD_ARCH=ppc64le
 BOARD_CHOST=$(get_board_chost ${BOARD})
 PORTAGE_PROFILE=$(get_board_profile "$BOARD")
 BOARD_BINHOST=$(generate_binhost_list)
@@ -278,7 +279,8 @@ if [[ ${FLAGS_regen_configs} -eq ${FLAGS_FALSE} ]]; then
         "${FLAGS_getbinpkg}" -eq "${FLAGS_TRUE}" ]]
   then
     EMERGE_FLAGS+=" --usepkg --getbinpkg"
-    EMERGE_TOOLCHAIN_FLAGS+=" --usepkgonly --getbinpkg"
+    #EMERGE_TOOLCHAIN_FLAGS+=" --usepkgonly --getbinpkg"
+    EMERGE_TOOLCHAIN_FLAGS+=" --getbinpkg"
   else
     # When binary packages are disabled we need to make sure the cross
     # sysroot includes any build dependencies for the toolchain.
